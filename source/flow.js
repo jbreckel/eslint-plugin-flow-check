@@ -32,21 +32,22 @@ function flow(options) {
 	}
 
 	const {errors} = JSON.parse(result.stdout);
+	return errors
+		.filter(({ level }) => options.level == null || level === options.level)
+		.map(error => {
+			const [leading, ...rest] = error.message;
+			const payload = rest.map(m => format(m, {
+				root: options.root
+			}));
 
-	return errors.map(error => {
-		const [leading, ...rest] = error.message;
-		const payload = rest.map(m => format(m, {
-			root: options.root
-		}));
-
-		return {
-			message: [leading.descr, ...payload].join(': '),
-			path: leading.path,
-			start: leading.loc.start.line,
-			end: leading.loc.end.line,
-			loc: leading.loc
-		};
-	});
+			return {
+				message: [leading.descr, ...payload].join(': '),
+				path: leading.path,
+				start: leading.loc.start.line,
+				end: leading.loc.end.line,
+				loc: leading.loc
+			};
+		});
 }
 
 function format(message, options) {

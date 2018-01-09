@@ -34,6 +34,21 @@ Make sure to enable the plugin via its rule.
 }
 ```
 
+To get a difference between flow errors and warnings you can also activate the according rules:
+
+```json
+{
+  "eslintConfig": {
+    "rules": {
+      "flow-check/error": "error",
+      "flow-check/warning": "warn",
+    },
+    "parser": "babel-eslint",
+    "plugins": ["flow-check"]
+  }
+}
+```
+
 Create a `.flowconfig` in your project root. See the [flow-type docs](https://flowtype.org/docs/advanced-configuration.html) for details.
 
 ```

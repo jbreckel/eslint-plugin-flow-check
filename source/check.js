@@ -28,7 +28,8 @@ function check(source, options) {
 	const reports = flow({
 		root: projectRoot,
 		source,
-		fileName: options.fileName
+		fileName: options.fileName,
+		level: options.level
 	});
 
 	return [null, reports];
